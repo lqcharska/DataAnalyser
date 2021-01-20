@@ -1,4 +1,20 @@
-#ifndef CSVDATA_H
-#define CSVDATA_H
+#pragma once
+#include "QString"
+#include <QFile>
+#include <vector>
 
-#endif // CSVDATA_H
+
+class Row
+{
+public:
+    int index;
+    std::vector<float> content;
+};
+
+
+class CSVData: public QFile
+{
+public:
+    std::vector<Row> rows;
+
+};

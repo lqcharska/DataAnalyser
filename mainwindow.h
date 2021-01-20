@@ -18,6 +18,8 @@ public:
 private slots:
     void on_actionOpen_CSV_triggered();
 
+    void on_checkBox_2_stateChanged(int arg1);
+
 private:
     Ui::MainWindow *ui;
 };

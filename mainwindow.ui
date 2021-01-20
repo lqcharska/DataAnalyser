@@ -212,7 +212,7 @@
      <attribute name="title">
       <string>Data</string>
      </attribute>
-     <widget class="QTextBrowser" name="textBrowser">
+     <widget class="QTextBrowser" name="rawData">
       <property name="geometry">
        <rect>
         <x>0</x>

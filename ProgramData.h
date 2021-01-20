@@ -1,4 +1,12 @@
-#ifndef PROGRAMDATA_H
-#define PROGRAMDATA_H
+#pragma once
+#include <QString>
+#include "CSVData.h"
 
-#endif // PROGRAMDATA_H
+class ProgramData
+{
+public:
+    QString CSVFilePath;
+    CSVData data;
+
+
+};
