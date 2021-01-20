@@ -13,6 +13,8 @@ SOURCES += \
     mainwindow.cpp
 
 HEADERS += \
+    CSVData.h \
+    ProgramData.h \
     mainwindow.h
 
 FORMS += \

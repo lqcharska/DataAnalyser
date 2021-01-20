@@ -1,0 +1,4 @@
+#ifndef PROGRAMDATA_H
+#define PROGRAMDATA_H
+
+#endif // PROGRAMDATA_H

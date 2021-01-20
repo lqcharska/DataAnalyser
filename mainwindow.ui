@@ -6,16 +6,297 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>1121</width>
+    <height>658</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <widget class="QWidget" name="centralwidget"/>
-  <widget class="QMenuBar" name="menubar"/>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QTabWidget" name="Properties">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>331</width>
+      <height>611</height>
+     </rect>
+    </property>
+    <property name="currentIndex">
+     <number>1</number>
+    </property>
+    <widget class="QWidget" name="TabPropertiesPlot">
+     <attribute name="title">
+      <string>Plot</string>
+     </attribute>
+    </widget>
+    <widget class="QWidget" name="TabPropertiesData">
+     <attribute name="title">
+      <string>Data</string>
+     </attribute>
+     <widget class="QComboBox" name="comboBox">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>30</y>
+        <width>161</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <item>
+       <property name="text">
+        <string>Cambria</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Times New Roman</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Arial</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QLabel" name="label">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>30</y>
+        <width>68</width>
+        <height>19</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Font</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_2">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>80</y>
+        <width>68</width>
+        <height>19</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Size</string>
+      </property>
+     </widget>
+     <widget class="QSpinBox" name="FondSize">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>80</y>
+        <width>161</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="minimum">
+       <number>5</number>
+      </property>
+      <property name="maximum">
+       <number>36</number>
+      </property>
+      <property name="value">
+       <number>12</number>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_5">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>220</y>
+        <width>141</width>
+        <height>19</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Background colour</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_6">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>270</y>
+        <width>131</width>
+        <height>19</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Forground colour</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="checkBox">
+      <property name="geometry">
+       <rect>
+        <x>190</x>
+        <y>140</y>
+        <width>91</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Italic</string>
+      </property>
+      <property name="tristate">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="checkBox_2">
+      <property name="geometry">
+       <rect>
+        <x>170</x>
+        <y>180</y>
+        <width>91</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Bold</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton">
+      <property name="geometry">
+       <rect>
+        <x>170</x>
+        <y>220</y>
+        <width>88</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Colour</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_2">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>260</y>
+        <width>88</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Colour</string>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QTabWidget" name="View">
+    <property name="geometry">
+     <rect>
+      <x>330</x>
+      <y>0</y>
+      <width>801</width>
+      <height>631</height>
+     </rect>
+    </property>
+    <property name="currentIndex">
+     <number>1</number>
+    </property>
+    <widget class="QWidget" name="TabViewPlot">
+     <attribute name="title">
+      <string>Plot</string>
+     </attribute>
+    </widget>
+    <widget class="QWidget" name="TabViewData">
+     <attribute name="title">
+      <string>Data</string>
+     </attribute>
+     <widget class="QTextBrowser" name="textBrowser">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>781</width>
+        <height>581</height>
+       </rect>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1121</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <widget class="QMenu" name="menuOpen_recent_CSV">
+     <property name="title">
+      <string>Open recent CSV</string>
+     </property>
+    </widget>
+    <widget class="QMenu" name="menuOpen_recent_project">
+     <property name="title">
+      <string>Open recent project</string>
+     </property>
+    </widget>
+    <addaction name="actionOpen_CSV"/>
+    <addaction name="menuOpen_recent_CSV"/>
+    <addaction name="actionClose"/>
+    <addaction name="actionSave_as"/>
+    <addaction name="separator"/>
+    <addaction name="actionOpen_project"/>
+    <addaction name="menuOpen_recent_project"/>
+    <addaction name="actionSave"/>
+    <addaction name="actionSave_as_2"/>
+    <addaction name="actionClose_project"/>
+   </widget>
+   <addaction name="menuFile"/>
+  </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionOpen_CSV">
+   <property name="text">
+    <string>Open CSV</string>
+   </property>
+  </action>
+  <action name="actionClose">
+   <property name="text">
+    <string>Save</string>
+   </property>
+  </action>
+  <action name="actionSave_as">
+   <property name="text">
+    <string>Save as</string>
+   </property>
+  </action>
+  <action name="actionOpen_project">
+   <property name="text">
+    <string>Open project</string>
+   </property>
+  </action>
+  <action name="actionSave">
+   <property name="text">
+    <string>Save</string>
+   </property>
+  </action>
+  <action name="actionSave_as_2">
+   <property name="text">
+    <string>Save as</string>
+   </property>
+  </action>
+  <action name="actionClose_project">
+   <property name="text">
+    <string>Close project</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>
