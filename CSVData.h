@@ -17,4 +17,12 @@ class CSVData: public QFile
 public:
     std::vector<Row> rows;
 
+    bool render() {
+        // TODO
+        return true;
+    }
+
+    void clear() {
+        // TODO
+    }
 };
