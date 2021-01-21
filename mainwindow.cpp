@@ -41,6 +41,7 @@ void MainWindow::on_actionOpen_CSV_triggered()
         tr("Open CSV"), "", tr("CSV Files (*.csv)"));
    if  (!fileName.isEmpty())
    {
+       programData.data.clear();
        programData.CSVFilePath = fileName;
        programData.data.setFileName(fileName);
        if(!programData.data.open(QIODevice::ReadOnly | QIODevice::Text))
@@ -52,8 +53,8 @@ void MainWindow::on_actionOpen_CSV_triggered()
        else
        {
            QTextBrowser *rawData =  ui->View->findChild<QTextBrowser*>("rawData");
+           rawData->clear();
            rawData->append(programData.data.readAll());
-
 
            // to witek dorzuca
            programData.data.render();
@@ -68,10 +69,6 @@ void MainWindow::on_actionOpen_CSV_triggered()
     msgBox.exec();*/
 
 }
-
-
-
-
 
 
 //dark mode from https://www.medo64.com/2020/08/dark-mode-for-qt-application/

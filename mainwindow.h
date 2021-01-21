@@ -17,20 +17,6 @@ public:
 
 private slots:
     void on_actionOpen_CSV_triggered();
-	
-    void on_SetItalic_stateChanged(int arg1);
-
-    void on_SetBold_stateChanged(int arg1);
-
-    void on_SetFont_currentIndexChanged(int index);
-
-    void on_SetFont_activated(int index);
-
-    void on_SetFondSize_valueChanged(int arg1);
-
-    void on_SetBackgroundColour_clicked();
-
-    void on_SetFontColour_clicked();
 
     void on_actionFont_s_style_triggered();
 
