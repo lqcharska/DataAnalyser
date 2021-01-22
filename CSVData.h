@@ -30,6 +30,17 @@ public:
         }
 
     }
+
+    float GetValueFromRow(int i)
+    {
+        return content.at(i);
+    }
+
+    int GetLengthOfRow()
+    {
+        return content.size();
+    }
+
     bool IsValid()
     {
        return valid;
@@ -51,6 +62,11 @@ public:
     std::vector<Row> rows;
     int damagedRows = 0;
     QStringList listOfTitles;
+
+    Row getRows(int i)
+    {
+        return rows.at(i);
+    }
 
     bool render()
     {
@@ -84,9 +100,6 @@ public:
         QString title = QString(readLine());
         listOfTitles = title.split(QRegExp("\\s+"), QString::SkipEmptyParts);
         listOfTitles.removeAt(0);
-        QMessageBox msgBox;
-        msgBox.setText(title);
-        msgBox.exec();
         bool valid = Check();
 
         if (damagedRows != 0 || !valid)

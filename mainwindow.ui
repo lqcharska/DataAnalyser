@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1121</width>
-    <height>658</height>
+    <width>1125</width>
+    <height>652</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,18 +21,64 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>30</y>
+      <y>0</y>
       <width>331</width>
-      <height>591</height>
+      <height>601</height>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="TabPropertiesPlot">
      <attribute name="title">
       <string>Plot</string>
      </attribute>
+     <widget class="QSpinBox" name="ChooseXColumn">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>30</y>
+        <width>42</width>
+        <height>25</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="XaxisColumn_label">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>30</y>
+        <width>131</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>X axis column</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="YaxisColumn_label">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>80</y>
+        <width>131</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Y axis column</string>
+      </property>
+     </widget>
+     <widget class="QSpinBox" name="ChooseYColumn">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>80</y>
+        <width>42</width>
+        <height>25</height>
+       </rect>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="TabPropertiesData">
      <attribute name="title">
@@ -44,8 +90,8 @@
     <property name="geometry">
      <rect>
       <x>330</x>
-      <y>30</y>
-      <width>801</width>
+      <y>0</y>
+      <width>771</width>
       <height>601</height>
      </rect>
     </property>
@@ -56,6 +102,16 @@
      <attribute name="title">
       <string>Plot</string>
      </attribute>
+     <widget class="QCustomPlot" name="Plot" native="true">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>10</y>
+        <width>781</width>
+        <height>531</height>
+       </rect>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="TabViewData">
      <attribute name="title">
@@ -79,7 +135,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1121</width>
+     <width>1125</width>
      <height>21</height>
     </rect>
    </property>
@@ -99,13 +155,11 @@
     </widget>
     <addaction name="actionOpen_CSV"/>
     <addaction name="menuOpen_recent_CSV"/>
-    <addaction name="actionClose"/>
-    <addaction name="actionSave_as"/>
     <addaction name="separator"/>
     <addaction name="actionOpen_project"/>
     <addaction name="menuOpen_recent_project"/>
-    <addaction name="actionSave"/>
-    <addaction name="actionSave_as_2"/>
+    <addaction name="actionSave_project"/>
+    <addaction name="actionSave_project_as"/>
     <addaction name="actionClose_project"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
@@ -121,76 +175,150 @@
     <addaction name="actionBackground_font_s_colour"/>
     <addaction name="separator"/>
    </widget>
+   <widget class="QMenu" name="menuPlot">
+    <property name="title">
+     <string>Plot</string>
+    </property>
+    <addaction name="actionPlot_data"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
+   <addaction name="menuPlot"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionOpen_CSV"/>
+   <addaction name="actionOpen_project"/>
+   <addaction name="actionPlot_data"/>
+  </widget>
   <action name="actionOpen_CSV">
+   <property name="icon">
+    <iconset resource="Resources.qrc">
+     <normaloff>:/new/prefix1/images/file_open.png</normaloff>:/new/prefix1/images/file_open.png</iconset>
+   </property>
    <property name="text">
     <string>Open CSV</string>
    </property>
   </action>
-  <action name="actionClose">
-   <property name="text">
-    <string>Save</string>
-   </property>
-  </action>
-  <action name="actionSave_as">
-   <property name="text">
-    <string>Save as</string>
-   </property>
-  </action>
   <action name="actionOpen_project">
+   <property name="icon">
+    <iconset resource="Resources.qrc">
+     <normaloff>:/new/prefix1/images/open_icon.png</normaloff>:/new/prefix1/images/open_icon.png</iconset>
+   </property>
    <property name="text">
     <string>Open project</string>
    </property>
   </action>
-  <action name="actionSave">
+  <action name="actionSave_project">
+   <property name="icon">
+    <iconset resource="Resources.qrc">
+     <normaloff>:/new/prefix1/images/save.png</normaloff>:/new/prefix1/images/save.png</iconset>
+   </property>
    <property name="text">
-    <string>Save</string>
+    <string>Save project</string>
    </property>
   </action>
-  <action name="actionSave_as_2">
+  <action name="actionSave_project_as">
+   <property name="icon">
+    <iconset resource="Resources.qrc">
+     <normaloff>:/new/prefix1/images/save_as.png</normaloff>:/new/prefix1/images/save_as.png</iconset>
+   </property>
    <property name="text">
     <string>Save as</string>
    </property>
   </action>
   <action name="actionClose_project">
+   <property name="icon">
+    <iconset resource="Resources.qrc">
+     <normaloff>:/new/prefix1/images/close.png</normaloff>:/new/prefix1/images/close.png</iconset>
+   </property>
    <property name="text">
     <string>Close project</string>
    </property>
   </action>
   <action name="actionFont_s_style">
+   <property name="icon">
+    <iconset resource="Resources.qrc">
+     <normaloff>:/new/prefix1/images/font_style.png</normaloff>:/new/prefix1/images/font_style.png</iconset>
+   </property>
    <property name="text">
     <string>Font's style</string>
    </property>
   </action>
   <action name="actionBackground_s_colour">
+   <property name="icon">
+    <iconset resource="Resources.qrc">
+     <normaloff>:/new/prefix1/images/background_colour.png</normaloff>:/new/prefix1/images/background_colour.png</iconset>
+   </property>
    <property name="text">
     <string>Background's colour</string>
    </property>
   </action>
   <action name="actionFont_s_colour">
+   <property name="icon">
+    <iconset resource="Resources.qrc">
+     <normaloff>:/new/prefix1/images/font colour.png</normaloff>:/new/prefix1/images/font colour.png</iconset>
+   </property>
    <property name="text">
     <string>Font's colour</string>
    </property>
   </action>
   <action name="actionBackground_font_s_colour">
+   <property name="icon">
+    <iconset resource="Resources.qrc">
+     <normaloff>:/new/prefix1/images/background_font_colour.png</normaloff>:/new/prefix1/images/background_font_colour.png</iconset>
+   </property>
    <property name="text">
     <string>Background font's colour</string>
    </property>
   </action>
   <action name="actionNight_mode">
+   <property name="icon">
+    <iconset resource="Resources.qrc">
+     <normaloff>:/new/prefix1/images/night.png</normaloff>:/new/prefix1/images/night.png</iconset>
+   </property>
    <property name="text">
     <string>Night mode</string>
    </property>
   </action>
   <action name="actionDay_mode">
+   <property name="icon">
+    <iconset resource="Resources.qrc">
+     <normaloff>:/new/prefix1/images/day.png</normaloff>:/new/prefix1/images/day.png</iconset>
+   </property>
    <property name="text">
     <string>Day mode</string>
    </property>
   </action>
+  <action name="actionPlot_data">
+   <property name="icon">
+    <iconset resource="Resources.qrc">
+     <normaloff>:/new/prefix1/images/graph_icon.png</normaloff>:/new/prefix1/images/graph_icon.png</iconset>
+   </property>
+   <property name="text">
+    <string>Plot data</string>
+   </property>
+  </action>
  </widget>
- <resources/>
+ <customwidgets>
+  <customwidget>
+   <class>QCustomPlot</class>
+   <extends>QWidget</extends>
+   <header>qcustomplot.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="Resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

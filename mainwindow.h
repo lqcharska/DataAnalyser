@@ -15,6 +15,8 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    void LoadData (QString fileName);
+
 private slots:
     void on_actionOpen_CSV_triggered();
 
@@ -31,6 +33,18 @@ private slots:
     void on_actionDay_mode_triggered();
 
     void RefreshDataView();
+
+    void on_actionSave_project_triggered();
+
+    void on_actionPlot_data_triggered();
+
+    void on_ChooseXColumn_valueChanged(int arg1);
+
+    void on_ChooseYColumn_valueChanged(int arg1);
+
+    void on_actionOpen_project_triggered();
+
+    void on_actionSave_project_as_triggered();
 
 private:
     Ui::MainWindow *ui;
