@@ -36,8 +36,6 @@ private slots:
 
     void on_actionSave_project_triggered();
 
-    void on_actionPlot_data_triggered();
-
     void on_ChooseXColumn_valueChanged(int arg1);
 
     void on_ChooseYColumn_valueChanged(int arg1);
@@ -46,33 +44,53 @@ private slots:
 
     void on_actionSave_project_as_triggered();
 
-    void on_actionAdd_plot_triggered();
-
-    void titleDoubleClick(QMouseEvent* event);
-
-    void removeSelectedGraph();
-
-    void moveLegend();
-
     void openRecentCSV();
 
     void openRecentProject();
 
+    void on_YColumn1_valueChanged(int arg1);
+
+    void on_YColumn2_valueChanged(int arg1);
+
+    void on_YColumn3_valueChanged(int arg1);
+
+    void on_ColourGraph1_clicked();
+
+    void on_ColourGraph2_clicked();
+
+    void on_ColourGraph3_clicked();
+
+    void on_ZoomGraph1_clicked();
+
+    void on_ZoomGraph2_clicked();
+
+    void on_ZoomGraph3_clicked();
+
+    void titleDoubleClick(QMouseEvent* event);
+
+
+
+
 private:
     Ui::MainWindow *ui;
+
     void createCSVMenu();
+
     void createProjectMenu();
+
     void loadFile(const QString &filePath);
 
-    void createActionsAndConnections();
-    QAction* openAction;
-
     void openCSV(QString fileName);
+
     void openProject(QString fileName);
 
+    void refreshGraph (int index);
 
+    void XColumnFill (int arg1);
 
+    void setGraphColour (int graphIndex);
 
+    void setZoom (int graphIndex);
 
 };
 #endif // MAINWINDOW_H

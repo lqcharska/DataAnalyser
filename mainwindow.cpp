@@ -26,7 +26,23 @@ MainWindow::MainWindow(QWidget *parent)
     QDir dir(".");
     programData.settingsFilePath = (dir.absolutePath() + "/recentFiles.ini");
     programData.saveProgramData.Read(programData.settingsFilePath);
+
     createCSVMenu();
+
+    QCustomPlot *plot =  ui->View->findChild<QCustomPlot*>("Plot");
+    plot->addGraph();
+    plot->addGraph();
+    plot->addGraph();
+    plot->legend->setVisible(true);
+    plot->legend->setFont(QFont("Helvetica", 8));
+
+    QCPTextElement *title = new QCPTextElement(plot, "Interaction Example", QFont("sans", 12, QFont::Bold));
+    plot->plotLayout()->insertRow(0);
+    plot->plotLayout()->addElement(0, 0, title);
+    connect(plot, SIGNAL(axisDoubleClick(QCPAxis*,QCPAxis::SelectablePart,QMouseEvent*)), this, SLOT(axisLabelDoubleClick(QCPAxis*,QCPAxis::SelectablePart)));
+    connect(plot, SIGNAL(legendDoubleClick(QCPLegend*,QCPAbstractLegendItem*,QMouseEvent*)), this, SLOT(legendDoubleClick(QCPLegend*,QCPAbstractLegendItem*)));
+    connect(title, SIGNAL(doubleClicked(QMouseEvent*)), this, SLOT(titleDoubleClick(QMouseEvent*)));
+
 }
 
 MainWindow::~MainWindow()
@@ -43,6 +59,7 @@ void MainWindow:: RefreshDataView()
     rawData->clear();
     rawData->append(temporaryData);
 }
+
 
 void MainWindow:: LoadData (QString fileName)
 {
@@ -79,6 +96,7 @@ void MainWindow::openCSV(QString fileName)
         createCSVMenu();
     }
 }
+
 
 void MainWindow::on_actionOpen_CSV_triggered()
 {
@@ -132,8 +150,6 @@ void MainWindow::on_actionDay_mode_triggered()
 }
 
 
-
-
 void MainWindow::on_actionSave_project_triggered()
 {
     if (programData.projectPath == "")
@@ -166,169 +182,6 @@ void MainWindow::on_actionSave_project_as_triggered()
 }
 
 
-
-void XColumnFill (int arg1)
-{
-    programData.columnX.clear();
-    for (auto i : programData.data.rows)
-    {
-        programData.columnX.push_back(i.GetValueFromRow(arg1));
-    }
-}
-
-void YColumnFill (int arg1)
-{
-    programData.columnY.clear();
-    for (auto i : programData.data.rows)
-    {
-        programData.columnY.push_back(i.GetValueFromRow(arg1));
-    }
-}
-
-void MainWindow::on_actionPlot_data_triggered()
-{
-    if(programData.saveUserData.CSVfilePath != "")
-    {
-        QCustomPlot *plot =  ui->View->findChild<QCustomPlot*>("Plot");
-        XColumnFill(programData.xColumn);
-        YColumnFill(programData.yColumn);
-        plot->addGraph();
-        plot->graph(0)->setPen(QPen(Qt::blue));
-        plot->graph(0)->setScatterStyle(QCPScatterStyle::ssCircle);
-        plot->graph(0)->setData(programData.columnX,programData.columnY);
-        // give the axes some labels:
-        programData.data.listOfTitles[programData.xColumn];
-        plot->xAxis->setLabel(programData.data.listOfTitles[programData.xColumn]);
-        plot->yAxis->setLabel(programData.data.listOfTitles[programData.yColumn]);
-        // set axes ranges, so we see all data:
-        plot->xAxis->setRange(*std::min_element(programData.columnX.begin(), programData.columnX.end()), *std::max_element(programData.columnX.begin(), programData.columnX.end()));
-        plot->yAxis->setRange(*std::min_element(programData.columnY.begin(), programData.columnY.end()), *std::max_element(programData.columnY.begin(), programData.columnY.end()));
-        QFont legendFont = font();
-
-        plot->plotLayout()->insertRow(0);
-        QCPTextElement *title = new QCPTextElement(plot, "Your data", QFont("sans", 17, QFont::Bold));
-        plot->plotLayout()->addElement(0, 0, title);
-
-        legendFont.setPointSize(10);
-        plot->legend->setVisible(true);
-        plot->legend->setFont(legendFont);
-        plot->legend->setSelectedFont(legendFont);
-        plot->legend->setSelectableParts(QCPLegend::spItems);
-        plot->replot();
-    }
-
-
-}
-
-
-
-void MainWindow::on_actionAdd_plot_triggered()
-{
-    QCustomPlot *plot =  ui->View->findChild<QCustomPlot*>("Plot");
-    XColumnFill(programData.xColumn);
-    YColumnFill(programData.yColumn);
-    plot->addGraph();
-    plot->graph(1)->setData(programData.columnX,programData.columnY);
-    plot->graph(1)->setPen(QPen(Qt::red));
-    plot->graph(1)->setScatterStyle(QCPScatterStyle::ssCircle);
-    plot->xAxis->setLabel("x");
-    plot->yAxis->setLabel("y");
-    plot->xAxis2->setVisible(true);
-    plot->xAxis2->setTickLabels(false);
-    plot->yAxis2->setVisible(true);
-    plot->yAxis2->setTickLabels(false);
-    // make left and bottom axes always transfer their ranges to right and top axes:
-    connect(plot->xAxis, SIGNAL(rangeChanged(QCPRange)), plot->xAxis2, SLOT(setRange(QCPRange)));
-    connect(plot->yAxis, SIGNAL(rangeChanged(QCPRange)), plot->yAxis2, SLOT(setRange(QCPRange)));
-    // let the ranges scale themselves so graph 0 fits perfectly in the visible area:
-    plot->graph(0)->rescaleAxes();
-    // same thing for graph 1, but only enlarge ranges (in case graph 1 is smaller than graph 0):
-    plot->graph(1)->rescaleAxes(true);
-    // Note: we could have also just called customPlot->rescaleAxes(); instead
-    // Allow user to drag axis ranges with mouse, zoom with mouse wheel and select graphs by clicking:
-    plot->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom | QCP::iSelectPlottables);
-    plot->replot();
-}
-
-void MainWindow::titleDoubleClick(QMouseEvent* event)
-{
-  QCustomPlot *plot =ui->View->findChild<QCustomPlot*>("Plot");
-  Q_UNUSED(event)
-  if (QCPTextElement *title = qobject_cast<QCPTextElement*>(sender()))
-  {
-    // Set the plot title by double clicking on it
-    bool ok;
-    QString newTitle = QInputDialog::getText(this, "QCustomPlot example", "New plot title:", QLineEdit::Normal, title->text(), &ok);
-    if (ok)
-    {
-      title->setText(newTitle);
-      plot->replot();
-    }
-  }
-}
-
-void MainWindow::removeSelectedGraph()
-{
-  QCustomPlot *plot =ui->View->findChild<QCustomPlot*>("Plot");
-  if (plot->selectedGraphs().size() > 0)
-  {
-    plot->removeGraph(plot->selectedGraphs().first());
-    plot->replot();
-  }
-}
-
-void MainWindow::moveLegend()
-{
-  QCustomPlot *plot =ui->View->findChild<QCustomPlot*>("Plot");
-  if (QAction* contextAction = qobject_cast<QAction*>(sender())) // make sure this slot is really called by a context menu action, so it carries the data we need
-  {
-    bool ok;
-    int dataInt = contextAction->data().toInt(&ok);
-    if (ok)
-    {
-     plot->axisRect()->insetLayout()->setInsetAlignment(0, (Qt::Alignment)dataInt);
-     plot->replot();
-    }
-  }
-}
-
-
-void MainWindow::on_ChooseXColumn_valueChanged(int arg1)
-{
-    if(arg1 < programData.data.rows.at(1).GetLengthOfRow())
-    {
-        programData.xColumn = arg1;
-
-    }
-    else
-    {
-        QMessageBox msgBox;
-        msgBox.setText("You do not have enough number of columns");
-        msgBox.setInformativeText("Max is: " + QString::number(programData.data.rows.at(1).GetLengthOfRow()));
-        msgBox.exec();
-        programData.xColumn = (programData.data.rows.at(1).GetLengthOfRow() - 1);
-    }
-
-}
-
-void MainWindow::on_ChooseYColumn_valueChanged(int arg1)
-{
-    if(arg1 < programData.data.rows.at(1).GetLengthOfRow())
-    {
-        programData.yColumn = arg1;
-    }
-    else
-    {
-        QMessageBox msgBox;
-        msgBox.setText("You do not have enough number of columns");
-        msgBox.setInformativeText("Max is: " + QString::number(programData.data.rows.at(1).GetLengthOfRow()));
-        msgBox.exec();
-        programData.yColumn = (programData.data.rows.at(1).GetLengthOfRow() - 1);
-    }
-
-}
-
-
 void MainWindow::openProject(QString fileName)
 {
     if (fileName != "")
@@ -358,6 +211,7 @@ void MainWindow::openProject(QString fileName)
         RefreshDataView();
     }
 }
+
 
 void MainWindow::on_actionOpen_project_triggered()
 {
@@ -408,6 +262,7 @@ void MainWindow::openRecentCSV()
     }
 }
 
+
 void MainWindow::openRecentProject()
 {
     QAction *action = qobject_cast<QAction *>(sender());
@@ -416,8 +271,6 @@ void MainWindow::openRecentProject()
         openProject(action->text());
     }
 }
-
-
 
 
 

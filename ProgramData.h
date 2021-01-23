@@ -3,6 +3,7 @@
 #include "CSVData.h"
 #include "SaveUserData.h"
 #include "SaveProgramData.h"
+#include "Graph.h"
 
 class ProgramData
 {
@@ -16,4 +17,6 @@ public:
     QString projectPath; //path to project
     QString settingsFilePath; //path settings
     SaveProgramData saveProgramData; //recent users projects
+
+    std::array<Graph, 3> graphs;
 };

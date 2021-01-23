@@ -10,12 +10,14 @@ CONFIG += c++11
 
 SOURCES += \
     DataViewStyle.cpp \
+    Plot.cpp \
     main.cpp \
     mainwindow.cpp \
     qcustomplot.cpp
 
 HEADERS += \
     CSVData.h \
+    Graph.h \
     ProgramData.h \
     SaveManager.h \
     SaveProgramData.h \
