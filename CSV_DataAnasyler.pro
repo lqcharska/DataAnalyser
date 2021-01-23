@@ -17,7 +17,9 @@ SOURCES += \
 HEADERS += \
     CSVData.h \
     ProgramData.h \
-    SaveProject.h \
+    SaveManager.h \
+    SaveProgramData.h \
+    SaveUserData.h \
     mainwindow.h \
     qcustomplot.h
 

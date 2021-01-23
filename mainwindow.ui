@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1125</width>
-    <height>652</height>
+    <width>1291</width>
+    <height>644</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -91,12 +91,12 @@
      <rect>
       <x>330</x>
       <y>0</y>
-      <width>771</width>
+      <width>941</width>
       <height>601</height>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="TabViewPlot">
      <attribute name="title">
@@ -107,7 +107,7 @@
        <rect>
         <x>0</x>
         <y>10</y>
-        <width>781</width>
+        <width>931</width>
         <height>531</height>
        </rect>
       </property>
@@ -122,7 +122,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>781</width>
+        <width>931</width>
         <height>581</height>
        </rect>
       </property>
@@ -135,7 +135,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1125</width>
+     <width>1291</width>
      <height>21</height>
     </rect>
    </property>
@@ -199,6 +199,7 @@
    <addaction name="actionOpen_CSV"/>
    <addaction name="actionOpen_project"/>
    <addaction name="actionPlot_data"/>
+   <addaction name="actionAdd_plot"/>
   </widget>
   <action name="actionOpen_CSV">
    <property name="icon">
@@ -306,6 +307,15 @@
    </property>
    <property name="text">
     <string>Plot data</string>
+   </property>
+  </action>
+  <action name="actionAdd_plot">
+   <property name="icon">
+    <iconset resource="Resources.qrc">
+     <normaloff>:/qrc/images/Add_more_plot.png</normaloff>:/qrc/images/Add_more_plot.png</iconset>
+   </property>
+   <property name="text">
+    <string>Add plot</string>
    </property>
   </action>
  </widget>

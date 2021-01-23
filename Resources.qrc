@@ -1,5 +1,7 @@
 <RCC>
-    <qresource prefix="/qrc"/>
+    <qresource prefix="/qrc">
+        <file>images/Add_more_plot.png</file>
+    </qresource>
     <qresource prefix="/new/prefix1">
         <file>images/background_colour.png</file>
         <file>images/background_font_colour.png</file>

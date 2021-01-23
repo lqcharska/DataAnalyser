@@ -46,7 +46,33 @@ private slots:
 
     void on_actionSave_project_as_triggered();
 
+    void on_actionAdd_plot_triggered();
+
+    void titleDoubleClick(QMouseEvent* event);
+
+    void removeSelectedGraph();
+
+    void moveLegend();
+
+    void openRecentCSV();
+
+    void openRecentProject();
+
 private:
     Ui::MainWindow *ui;
+    void createCSVMenu();
+    void createProjectMenu();
+    void loadFile(const QString &filePath);
+
+    void createActionsAndConnections();
+    QAction* openAction;
+
+    void openCSV(QString fileName);
+    void openProject(QString fileName);
+
+
+
+
+
 };
 #endif // MAINWINDOW_H
