@@ -1,6 +1,9 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "ui_mainwindow.h"
+
+
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
@@ -38,8 +41,6 @@ private slots:
 
     void on_ChooseXColumn_valueChanged(int arg1);
 
-    void on_ChooseYColumn_valueChanged(int arg1);
-
     void on_actionOpen_project_triggered();
 
     void on_actionSave_project_as_triggered();
@@ -68,8 +69,21 @@ private slots:
 
     void titleDoubleClick(QMouseEvent* event);
 
+    void axisLabelDoubleClick(QCPAxis *axis, QCPAxis::SelectablePart part);
 
+    void legendDoubleClick(QCPLegend *legend, QCPAbstractLegendItem *item);
 
+    void contextMenuRequest(QPoint pos);
+
+    void on_actionClean_triggered();
+
+    void moveLegend();
+
+    void removeSelectedGraph();
+
+    void removeAllGraphs();
+
+    void graphClicked(QCPAbstractPlottable *plottable, int dataIndex);
 
 private:
     Ui::MainWindow *ui;
@@ -91,6 +105,16 @@ private:
     void setGraphColour (int graphIndex);
 
     void setZoom (int graphIndex);
+
+
+    void activateIcons();
+
+    void selectionChanged();
+
+    void mousePress();
+
+    void mouseWheel();
+
 
 };
 #endif // MAINWINDOW_H

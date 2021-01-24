@@ -10,4 +10,9 @@ public:
     QVector<double> values;
     QColor colour;
     // QString label;
+
+    void clear()
+    {
+       values.clear();
+    }
 };

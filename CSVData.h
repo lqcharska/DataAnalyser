@@ -51,10 +51,6 @@ public:
     }
 };
 
-/*QMessageBox msgBox;
-msgBox.setText(fileName);
-msgBox.exec();*/
-
 
 class CSVData: public QFile
 {

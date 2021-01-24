@@ -23,6 +23,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    setWindowTitle("No name for now");
+
     QDir dir(".");
     programData.settingsFilePath = (dir.absolutePath() + "/recentFiles.ini");
     programData.saveProgramData.Read(programData.settingsFilePath);
@@ -30,18 +32,47 @@ MainWindow::MainWindow(QWidget *parent)
     createCSVMenu();
 
     QCustomPlot *plot =  ui->View->findChild<QCustomPlot*>("Plot");
+
+    plot->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom | QCP::iSelectAxes |
+                                      QCP::iSelectLegend | QCP::iSelectPlottables);
     plot->addGraph();
     plot->addGraph();
     plot->addGraph();
+
+    plot->xAxis->setRange(-8, 8);
+    plot->yAxis->setRange(-5, 5);
+    plot->axisRect()->setupFullAxesBox();
+
     plot->legend->setVisible(true);
     plot->legend->setFont(QFont("Helvetica", 8));
+    plot->legend->setSelectableParts(QCPLegend::spItems);
+
+    plot->xAxis->setLabel("x Axis");
+    plot->yAxis->setLabel("y Axis");
 
     QCPTextElement *title = new QCPTextElement(plot, "Interaction Example", QFont("sans", 12, QFont::Bold));
     plot->plotLayout()->insertRow(0);
     plot->plotLayout()->addElement(0, 0, title);
-    connect(plot, SIGNAL(axisDoubleClick(QCPAxis*,QCPAxis::SelectablePart,QMouseEvent*)), this, SLOT(axisLabelDoubleClick(QCPAxis*,QCPAxis::SelectablePart)));
-    connect(plot, SIGNAL(legendDoubleClick(QCPLegend*,QCPAbstractLegendItem*,QMouseEvent*)), this, SLOT(legendDoubleClick(QCPLegend*,QCPAbstractLegendItem*)));
-    connect(title, SIGNAL(doubleClicked(QMouseEvent*)), this, SLOT(titleDoubleClick(QMouseEvent*)));
+
+
+    // connect slot that ties some axis selections together (especially opposite axes):
+      connect(plot, SIGNAL(selectionChangedByUser()), this, SLOT(selectionChanged()));
+      // connect slots that takes care that when an axis is selected, only that direction can be dragged and zoomed:
+      connect(plot, SIGNAL(mousePress(QMouseEvent*)), this, SLOT(mousePress()));
+      connect(plot, SIGNAL(mouseWheel(QWheelEvent*)), this, SLOT(mouseWheel()));
+
+      // make bottom and left axes transfer their ranges to top and right axes:
+      connect(plot->xAxis, SIGNAL(rangeChanged(QCPRange)), plot->xAxis2, SLOT(setRange(QCPRange)));
+      connect(plot->yAxis, SIGNAL(rangeChanged(QCPRange)), plot->yAxis2, SLOT(setRange(QCPRange)));
+
+      // connect some interaction slots:
+      connect(plot, SIGNAL(axisDoubleClick(QCPAxis*,QCPAxis::SelectablePart,QMouseEvent*)), this, SLOT(axisLabelDoubleClick(QCPAxis*,QCPAxis::SelectablePart)));
+      connect(plot, SIGNAL(legendDoubleClick(QCPLegend*,QCPAbstractLegendItem*,QMouseEvent*)), this, SLOT(legendDoubleClick(QCPLegend*,QCPAbstractLegendItem*)));
+      connect(title, SIGNAL(doubleClicked(QMouseEvent*)), this, SLOT(titleDoubleClick(QMouseEvent*)));
+
+      // setup policy and connect slot for context menu popup:
+      plot->setContextMenuPolicy(Qt::CustomContextMenu);
+      connect(plot, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(contextMenuRequest(QPoint)));
 
 }
 
@@ -94,19 +125,43 @@ void MainWindow::openCSV(QString fileName)
         programData.saveUserData.CSVfilePath = fileName;
         programData.saveProgramData.PushBackCSV(fileName);
         createCSVMenu();
+        activateIcons();
     }
 }
 
+
+void MainWindow::activateIcons()
+{
+    QSpinBox *ChooseXColumn =  ui->Properties->findChild<QSpinBox*>("ChooseXColumn");
+    ChooseXColumn->setEnabled(true);
+
+    QSpinBox *YColumn1 =  ui->Properties->findChild<QSpinBox*>("YColumn1");
+    YColumn1->setEnabled(true);
+    QPushButton *ColourGraph1 =  ui->Properties->findChild<QPushButton*>("ColourGraph1");
+    ColourGraph1->setEnabled(true);
+    QPushButton *ZoomGraph1 =  ui->Properties->findChild<QPushButton*>("ZoomGraph1");
+    ZoomGraph1->setEnabled(true);
+
+    QSpinBox *YColumn2 =  ui->Properties->findChild<QSpinBox*>("YColumn2");
+    YColumn2->setEnabled(true);
+    QPushButton *ColourGraph2 =  ui->Properties->findChild<QPushButton*>("ColourGraph2");
+    ColourGraph2->setEnabled(true);
+    QPushButton *ZoomGraph2 =  ui->Properties->findChild<QPushButton*>("ZoomGraph2");
+    ZoomGraph2->setEnabled(true);
+
+    QSpinBox *YColumn3 =  ui->Properties->findChild<QSpinBox*>("YColumn3");
+    YColumn3->setEnabled(true);
+    QPushButton *ColourGraph3 =  ui->Properties->findChild<QPushButton*>("ColourGraph3");
+    ColourGraph3->setEnabled(true);
+    QPushButton *ZoomGraph3 =  ui->Properties->findChild<QPushButton*>("ZoomGraph3");
+    ZoomGraph3->setEnabled(true);
+}
 
 void MainWindow::on_actionOpen_CSV_triggered()
 {
    QString fileName = QFileDialog::getOpenFileName(this,
         tr("Open CSV"), "", tr("CSV Files (*.csv)"));
    openCSV(fileName);
-    /*QMessageBox msgBox;
-    msgBox.setText(fileName);
-    msgBox.exec();*/
-
 }
 
 
@@ -209,6 +264,7 @@ void MainWindow::openProject(QString fileName)
 
         //Resfresh view
         RefreshDataView();
+        setWindowTitle(fileName);
     }
 }
 
@@ -219,6 +275,8 @@ void MainWindow::on_actionOpen_project_triggered()
     QString fileName = QFileDialog::getOpenFileName(this,
          tr("Open Project"), "", tr("DA's Files (*.da)"));
     openProject(fileName);
+
+    activateIcons();
 }
 
 
@@ -259,6 +317,7 @@ void MainWindow::openRecentCSV()
     if (action)
     {
         openCSV(action->text());
+        activateIcons();
     }
 }
 
@@ -269,8 +328,27 @@ void MainWindow::openRecentProject()
     if (action)
     {
         openProject(action->text());
+        activateIcons();
     }
 }
 
 
 
+
+void MainWindow::on_actionClean_triggered()
+{
+    QCustomPlot *plot =  ui->View->findChild<QCustomPlot*>("Plot");
+    programData.data.rows.clear();
+    programData.graphs[0].clear();
+    programData.graphs[1].clear();
+    programData.graphs[2].clear();
+    programData.columnX.clear();
+    programData.xColumn = 0;
+    refreshGraph(0);
+    refreshGraph(1);
+    refreshGraph(2);
+    plot->legend->setVisible(false);
+    plot->replot();
+
+    ui->View->findChild<QTextBrowser*>("rawData")->clear();
+}
